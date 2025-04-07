@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Vote</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" /><script type="text/javascript">
+  function preventBack() {
+      window.history.forward(); 
+  }
+    
+  setTimeout("preventBack()", 0);
+    
+  window.onunload = function () { null };
+</script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
+    <title>Bootstrap</title>
+  </head>
+
+  <body>
+
+
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
+
+<script type="text/javascript">
+  function preventBack() {
+      window.history.forward(); 
+  }
+    
+  setTimeout("preventBack()", 0);
+    
+  window.onunload = function () { null };
+</script>
+
+<body>
+<!-- partial:index.partial.html -->
+<div id="wrapper">
+      <div class="ev-wrapper">
+        <div class="ev-header">
+          <small></small>
+          <h2 class="ev-headline">National Public School</h2>
+          <h3 class="ev-headline">Student Council Elections</h3>
+          <h2>{{pos}}</h2>
+        </div>
+        <ul class="ev-user">
+            {% for i in data %}
+          <li class="ev-user-1 finalist-1">
+            <div class="modal" id="myModal{{i.id}}">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Confirm Vote</h4>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-hidden="true"
+                    >
+                      
+                    </button>
+                  </div>
+                  <div class="container"></div>
+                  <div class="modal-body">
+                    <span class="ev-headshot"><img src="{{i.Photo.url}}" width="160" height="160" /></span>
+                    
+                    <center><h2>Are you sure you want to vote for {{i.Candidate_name}}</h2></center>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn">Close</a>
+                    <a href="counter/{{i.id}},{{index}}" class="btn btn-primary">VOTE</a>
+
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <span class="ev-headshot"><img src="{{i.Photo.url}}" width="160" height="160" /></span>
+            <h3>{{i.Candidate_name}}</h3>
+            <p>{{i.house}}</p>
+              <a data-toggle="modal" href="#myModal{{i.id}}" class="btn-lg btn-primary">Vote</a>
+          </li>
+          {% endfor %}
+        </ul>
+            
+  
+        </ul>
+
+      </div>
+<!-- partial -->
+
+
+<script>
+
+  var modal = document.getElementById("myModal{{i.id}}2");
+  
+  
+  var btn = document.getElementById("myBtn");
+  
+  var span = document.getElementsByClassName("close")[0];
+  
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  
+  
+  </script>
+
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'>

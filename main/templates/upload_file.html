@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV File</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: #343a40;
+            color: white;
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            padding: 15px;
+        }
+        .sidebar h3, .sidebar ul {
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .form-container {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .guide {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Dashboard</h3>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'Admin_page' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_user' %}">Add User</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_position' %}">Add Positions</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+        <h2>Upload User Data</h2>
+        <div class="form-container">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+        <!-- Guide on CSV Format -->
+        <div class="guide">
+            <h4>CSV File Format Guide</h4>
+            <p>Ensure that your CSV file follows this format:</p>
+            <ul>
+                <li><strong>username</strong>: Unique identifier for the user (text)</li>
+                <li><strong>grade</strong>: User's grade (integer)</li>
+                <li><strong>house</strong>: User's house (single character)</li>
+                <ul>
+                    <li>Pericles: P</li>
+                    <li>Regulus: R</li>
+                    <li>Nicon: N</li>
+                    <li>Maxims: M</li>
+                </ul>
+                <li>The headers are a must otherwise the data <strong>will not</strong> be entered</li>
+                <li>Password will be auto-generated and stored. For accessing passwords please contact admin.</li>
+            </ul>
+            <p>Example:</p>
+            <pre><code>username,grade,house
+Anish,12,P
+Akshay,12,N
+
+</code></pre>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

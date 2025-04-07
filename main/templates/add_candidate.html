@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Candidate</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: #343a40;
+            color: white;
+            min-width: 250px;
+            max-width: 250px;
+            height: auto;
+            padding: 15px;
+            flex-shrink: 0;
+        }
+        .sidebar h3, .sidebar ul {
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .form-container {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .filter-input {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Dashboard</h3>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'Admin_page' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_user' %}">Add Users</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'upload_file' %}">Upload User Data</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_position' %}">Add Positions</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="form-container">
+            <h2>Add Candidate</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Add Candidate</button>
+            </form>
+        </div>
+
+        <div class="list-container mt-4">
+            <h3>Current Candidates</h3>
+            <input type="text" id="candidateFilter" class="form-control filter-input" onkeyup="filterTable()" placeholder="Filter candidates...">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Candidate Name</th>
+                        <th>Position</th>
+                        <th>House</th>
+                    </tr>
+                </thead>
+                <tbody id="candidateTableBody">
+                    {% for candidate in candidates %}
+                    <tr>
+                        <td>{{ candidate.Candidate_name }}</td>
+                        <td>{{ candidate.position.Position_name }}</td>
+                        <td>{{ candidate.House }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No candidates available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("candidateFilter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("candidateTableBody");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // assuming the first column is the one to filter by
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

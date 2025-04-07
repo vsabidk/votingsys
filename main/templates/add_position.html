@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Position</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: #343a40;
+            color: white;
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            padding: 15px;
+        }
+        .sidebar h3, .sidebar ul {
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .form-container {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .form-group-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .form-group {
+            flex: 1;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            margin-bottom: 0;
+        }
+        .filter-input {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Dashboard</h3>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'Admin_page' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_user' %}">Add Users</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'upload_file' %}">Upload User Data</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_position' %}">Add Positions</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="form-container">
+            <h2>Add Position</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="id_Position_name">Position Name:</label>
+                        {{ form.Position_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_House">House:</label>
+                        {{ form.House }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_Grades_voting">Grades Voting:</label>
+                        {{ form.Grades_voting }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Position</button>
+            </form>
+        </div>
+
+        <div class="list-container mt-4">
+            <h3>Current Positions</h3>
+            <input type="text" id="positionFilter" class="form-control filter-input" onkeyup="filterTable()" placeholder="Filter positions...">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Position Name</th>
+                        <th>House</th>
+                        <th>Grades Voting</th>
+                    </tr>
+                </thead>
+                <tbody id="positionTableBody">
+                    {% for position in positions %}
+                    <tr>
+                        <td>{{ position.Position_name }}</td>
+                        <td>{{ position.House }}</td>
+                        <td>{{ position.Grades_voting }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No positions available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("positionFilter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("positionTableBody");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // assuming the first column is the one to filter by
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

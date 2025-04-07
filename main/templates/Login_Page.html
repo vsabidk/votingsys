@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Council Election Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      body {
+          background-color: #f8f9fa;
+          font-family: 'Poppins', sans-serif;
+      }
+      .header {
+          background: #343a40;
+          color: #fff;
+          padding: 10px 20px;
+          display: flex;
+          align-items: center;
+          
+      }
+      .logo {
+          max-height: 70px;
+      }
+      .houses img {
+          width: 200px;
+          height: 250px;
+          margin: 20px;
+          border-radius: 10px;
+          transition: transform 0.3s ease;
+      }
+      #yes{
+          position: absolute;
+          top:50%;
+          left:3%
+      }
+      .houses img:hover {
+          transform: scale(1.1);
+      }
+      .login-form {
+          position: relative;
+          left:45%;
+          background: white;
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          max-width: 400px;
+          margin: 50px auto;
+      }
+      .form-group input {
+          height: 65px;
+          font-size: 20px;
+      }
+      .login-form h2 {
+          margin-bottom: 20px;
+      }
+      @media (max-width: 768px) {
+          .houses {
+              display: none; /* Hide houses on small screens */
+          }
+          .login-form {
+              margin: 20px; /* Adjust margins for mobile devices */
+              position: relative;
+              top: 0;
+              left:0;
+          }
+      }
+
+      
+  </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{% static 'School logo.jpg' %}" alt="School Logo" class="logo">
+        <h1 style="margin-left: 0.5em;">National Public School Kengeri</h1>
+    </div>
+
+
+    <h1 style="font-size: 5em; position: absolute; left:4%; top:20%;">
+      Student Council Elections
+    </h1>
+    <div class="container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    {{ form.password }}
+                </div>
+                <button style="height: 65px;" type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            <div class="stamp">
+              <p>Designed & Developed by <br> Akshay Nagaraj and Anish Balabattuni</p>
+              <p>Batch of 2023-24</p>
+          </div>
+        </div>
+    </div>
+
+    <div id='yes' class="houses text-center">
+      <img src="{% static 'pericles.jpg' %}" alt="Pericles">
+      <img src="{% static 'maxims.jpg' %}" alt="Maxims">
+      <img src="{% static 'regulus.jpg' %}" alt="Regulus">
+      <img src="{% static 'nicon.jpg' %}" alt="Nicon">
+  </div>
+
+ 
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<style>
+  
+.stamp {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+    width: 300px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+
+
+.stamp p {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+</style>

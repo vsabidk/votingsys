@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Results</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: #343a40;
+            color: white;
+            min-width: 250px;
+            max-width: 250px;
+            height: auto;
+            padding: 15px;
+            flex-shrink: 0;
+        }
+        .sidebar h3, .sidebar ul {
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .list-container {
+            margin-top: 20px;
+        }
+        .position-group {
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Dashboard</h3>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_user' %}">Add User</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'upload_file' %}">Upload User Data</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_position' %}">Add Position</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'add_candidate' %}">Add Candidate</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="{% url 'Authentication' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="list-container">
+            <h2>Election Results</h2>
+            <div class="mb-3">
+                <a href="{% url 'export_csv' %}" class="btn btn-success">Export to CSV</a>
+                <a href="{% url 'export_pdf' %}" class="btn btn-danger">Export to PDF</a>
+            </div>
+            {% for position, candidates in grouped_candidates.items %}
+            <div class="position-group">
+                <h3>{{ position }}</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Candidate Name</th>
+                            <th>Votes Received</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidate in candidates %}
+                        <tr>
+                            <td>{{ candidate.Candidate_name }}</td>
+                            <td>{{ candidate.votes_Recieved }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% empty %}
+            <p>No results available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
